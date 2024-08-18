@@ -127,7 +127,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1;
   font-weight: 500;
   letter-spacing: 2px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 #header .logo a {
@@ -1690,7 +1690,7 @@ section {
   margin: 0 0 10px 0;
   padding: 2px 0 2px 0;
   line-height: 1;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   font-weight: 600;
   color: #37517e;
 }
