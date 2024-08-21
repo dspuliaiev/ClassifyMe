@@ -107,6 +107,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Указываем директорию для собранных статических файлов
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Шлях до директорії, де зберігатимуться завантажені файли
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
