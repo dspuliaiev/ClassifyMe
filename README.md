@@ -51,8 +51,10 @@ Project is mainly based on:
    ```
 
 5. **Set environment variables:**  
-   Create an ```.env``` file in the root of the project and add the necessary environment variables if needed.
-
+   Create an ```.env``` file in the root of the project and add the necessary environment variables if needed. For example:
+```
+SECRET_KEY=django-insecure-oc^irpj3$!sjy&j$@q!4mq(!7&5k2tnc1urvjz$)x2cf46fl9a
+```
 ## Using
 
 1. **Start the server:**  
