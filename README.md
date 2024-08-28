@@ -104,9 +104,7 @@ This model consists of 23 layers, including 6 convolutional layers with a kernel
 
 ### Training code for the model:
 
-```
-python
-```
+```python
 model = tf.keras.Sequential()
 model.add(tf.keras.layers.Conv2D(64,(4,4),input_shape=(32,32,3),activation='relu',padding='same'))
 model.add(tf.keras.layers.BatchNormalization())
@@ -148,7 +146,8 @@ plot_history(history)
 
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print('Validation accuracy:', test_acc)
-
+```
+  
 ### Training Graphs: 
 
 ![Screenshot5 of the ClassifyMe application](images/screenshot5.png)
