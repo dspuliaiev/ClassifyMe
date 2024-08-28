@@ -189,6 +189,12 @@ print('Validation accuracy:', test_acc)
 | dropout_3 (Dropout)          | (None, 256)        | 0          |
 | dense_1 (Dense)              | (None, 10)         | 2,570      |
 
-Total params: 3,091,594 (11.79 MB)
-Trainable params: 3,089,290 (11.78 MB)
-Non-trainable params: 2,304 (9.00 KB)
+**Total params: 3,091,594 (11.79 MB)**
+**Trainable params: 3,089,290 (11.78 MB)**
+**Non-trainable params: 2,304 (9.00 KB)**
+
+![Screenshot6 of the ClassifyMe application](images/screenshot6.png)
+
+### Model Visualization:
+
+![Screenshot7 of the ClassifyMe application](images/screenshot7.png)
