@@ -2,7 +2,10 @@
 # ClassifyMe - Image Classification Web Service
 
 ## Introduction
-ClassifyMe is a web-based image classification service built on the Django web platform, using TensorFlow and other dependencies. The goal of the project is to classify images for a client who creates unlabeled images, helping his model learn to create new images. The project is configured to work in a Docker container.
+ClassifyMe is a web-based image classification service built on the Django web platform, utilizing TensorFlow and other dependencies. The primary goal of this project is to classify images into one of the following categories: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck. This classification assists clients in labeling their unlabeled images, aiding their model in learning to generate new images. The project is fully configured to operate within a Docker container environment.
+
+## The data used to train the model
+[CIFAR-10](https://www.kaggle.com/competitions/cifar-10)
 
 ## Technologies
 Project is mainly based on:
@@ -30,7 +33,10 @@ Project is mainly based on:
    ```
    docker-compose up
    ```
-
+   or
+   ```
+   docker-compose up -d 
+   ```
 ## Settings
 
 1. **Install dependencies with Poetry:**  
@@ -59,6 +65,10 @@ Project is mainly based on:
    ```
    docker-compose up
    ```
+   or
+   ```
+   docker-compose up -d 
+   ```
 
 3. **Access to the service:**
    Open your browser and follow the link
@@ -69,3 +79,14 @@ Project is mainly based on:
    You should see the main page.
 
 ![Screenshot of the ClassifyMe application](images/screenshot.png)
+
+
+   Examples of Image Classification.
+   
+![Screenshot2 of the ClassifyMe application](images/screenshot2.png)
+
+![Screenshot3 of the ClassifyMe application](images/screenshot3.png)
+
+![Screenshot4 of the ClassifyMe application](images/screenshot4.png)
+
+   
