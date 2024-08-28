@@ -23,8 +23,13 @@ Project is mainly based on:
    ```
    git clone https://github.com/alenaporoskun/Group_4_Image_Classification_Web_Service.git
    ```
-
-3. **Create a Docker image:**
+   
+2. **Create a Docker image:**
+    ```
+   cd Group_4_Image_Classification_Web_Service
+    ```
+    
+4. **Create a Docker image:**
    ```
    docker-compose build
    ```
