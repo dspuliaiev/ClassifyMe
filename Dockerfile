@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 COPY . .
 
@@ -21,6 +21,6 @@ COPY --from=builder /app/media /usr/share/nginx/html/media
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
