@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt gunicorn
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
@@ -14,13 +14,12 @@ RUN python manage.py migrate && \
     python manage.py collectstatic --noinput
 
 # Stage 2: Production
-FROM nginx:alpine
+FROM python:3.12-slim
 
-COPY --from=builder /app/staticfiles /usr/share/nginx/html/static
-COPY --from=builder /app/media /usr/share/nginx/html/media
+WORKDIR /app
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app /app
 
 EXPOSE 8000
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "image_web_classifier.wsgi:application"]
