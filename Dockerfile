@@ -10,16 +10,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN python manage.py migrate && \
-    python manage.py collectstatic --noinput
+RUN python manage.py migrate
 
-# Stage 2: Production
-FROM python:3.12-slim
+RUN python manage.py collectstatic --noinput
 
-WORKDIR /app
-
-COPY --from=builder /app /app
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
 EXPOSE 8000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "image_web_classifier.wsgi:application"]

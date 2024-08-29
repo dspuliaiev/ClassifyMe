@@ -3,13 +3,12 @@ version: '3.8'
 services:
   web:
     build: .
-    command: gunicorn --bind 0.0.0.0:8000 image_web_classifier.wsgi:application
+    container_name: image_web_classifier
+    ports:
+      - "8000:8000"
     volumes:
       - .:/app
-    expose:
-      - "8000"
-
-volumes:
-  static_volume:
-  media_volume:
+    environment:
+      - ENV=production
+    command: python manage.py runserver 0.0.0.0:8000
 
