@@ -18,7 +18,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['static-inesita-pyweb-e2cbbeee.koyeb.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['convinced-caralie-pyweb-325c4439.koyeb.app', 'localhost', '127.0.0.1']
 
 
 # Application definition
