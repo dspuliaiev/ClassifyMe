@@ -14,7 +14,7 @@ services:
       - ./main/static/main:/app/main/static/main
       - ./media:/app/media
     ports:
-      - "80:80"
+      - "8000:8000"
     depends_on:
       - web
 
