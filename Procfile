@@ -1,1 +1,1 @@
-web: gunicorn project_name.wsgi:application --bind 0.0.0.0:$PORT
+web: gunicorn image_web_classifier.wsgi:application --bind 0.0.0.0:$PORT
