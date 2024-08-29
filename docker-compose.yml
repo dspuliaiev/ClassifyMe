@@ -6,8 +6,8 @@ services:
     command: gunicorn --workers 2 --bind 0.0.0.0:8000 image_web_classifier.wsgi:application
     volumes:
       - .:/app
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
 
@@ -18,7 +18,7 @@ services:
       - static_volume:/usr/share/nginx/html/static
       - media_volume:/usr/share/nginx/html/media
     ports:
-      - "80:8000"
+      - "8000:8000"
     depends_on:
       - web
 
