@@ -1,8 +1,14 @@
 
-# Use offisial python image
+# Use official python image
 FROM python:3.12-slim
 
-# Install work directory
+# Install required dependencies for Pillow and other packages
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libjpeg-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set work directory
 WORKDIR /app
 
 # Copy and install poetry
@@ -14,9 +20,10 @@ RUN pip install --no-cache-dir poetry \
 # Copy source code
 COPY . /app/
 
-# Write the command to run the Django server using Gunicorn
+# Command to run the Django server using Gunicorn
 CMD ["gunicorn", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 # Open port 8000
 EXPOSE 8000
+
 
