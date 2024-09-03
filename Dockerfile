@@ -8,8 +8,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 RUN pip install --no-cache-dir poetry \
     && poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --no-dev \
-
+    && poetry install --no-interaction --no-ansi --no-dev
 
 # Stage 2: Run
 FROM python:3.12-alpine
@@ -28,6 +27,7 @@ CMD ["gunicorn", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:800
 
 # Open port 8000
 EXPOSE 8000
+
 
 
 
