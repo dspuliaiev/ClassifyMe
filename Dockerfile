@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM python:3.12-bookworm AS builder
+FROM python:3.11-slim-bullseye AS builder
 
 # Install required dependencies for Pillow and other packages
 RUN apt-get update && apt-get install -y \
@@ -18,7 +18,7 @@ RUN pip install --no-cache-dir poetry \
     && poetry install --no-interaction --no-ansi --no-dev
 
 # Stage 2: Run
-FROM python:3.12-bookworm
+FROM python:3.11-slim-bullseye
 
 # Set work directory
 WORKDIR /app
