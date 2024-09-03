@@ -1,13 +1,6 @@
 
-# Stage 1: Build
-FROM python:3.12-slim AS builder
-
-# Install required dependencies for Pillow and other packages
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    zlib1g-dev \
-    libjpeg-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Use official python image
+FROM python:3.12-slim
 
 # Set work directory
 WORKDIR /app
@@ -16,16 +9,7 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock /app/
 RUN pip install --no-cache-dir poetry \
     && poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --no-dev
-
-# Stage 2: Run
-FROM python:3.12-slim
-
-# Set work directory
-WORKDIR /app
-
-# Copy installed dependencies from builder stage
-COPY --from=builder /app /app
+    && poetry install --no-interaction --no-ansi
 
 # Copy source code
 COPY . /app/
