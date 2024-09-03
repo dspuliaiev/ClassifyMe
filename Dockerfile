@@ -1,32 +1,37 @@
-# Stage 1: Build
-FROM python:3.12-alpine AS builder
+# Используем базовый образ Python на основе Debian Bullseye
+FROM python:3.12-bullseye
 
-# Set work directory
+# Устанавливаем необходимые системные зависимости
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    pkg-config \
+    libhdf5-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Copy and install poetry
-COPY pyproject.toml poetry.lock /app/
-RUN pip install --no-cache-dir poetry \
-    && poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --no-dev
+# Копируем poetry.lock и pyproject.toml
+COPY pyproject.toml poetry.lock ./
 
-# Stage 2: Run
-FROM python:3.12-alpine
+# Устанавливаем Poetry
+RUN pip install poetry
 
-# Set work directory
-WORKDIR /app
+# Настраиваем Poetry для использования системного Python
+RUN poetry config virtualenvs.create false
 
-# Copy installed dependencies from builder stage
-COPY --from=builder /app /app
+# Устанавливаем зависимости
+RUN poetry install --no-interaction --no-ansi --no-dev
 
-# Copy source code
+# Копируем весь проект
 COPY . .
 
-# Command to run the Django server using Gunicorn
-CMD ["gunicorn", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Собираем статические файлы
+RUN python manage.py collectstatic --noinput
 
-# Open port 8000
-EXPOSE 8000
+# Команда для запуска приложения с использованием gunicorn
+CMD ["gunicorn", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 
 
