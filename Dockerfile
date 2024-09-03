@@ -1,6 +1,6 @@
 
 # Use official python image
-FROM python:3.12-slim-buster
+FROM python:3.12-slim
 
 # Install required dependencies for Pillow and other packages
 RUN apt-get update && apt-get install -y \
