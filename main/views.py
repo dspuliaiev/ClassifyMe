@@ -8,7 +8,6 @@ from tensorflow.keras.models import load_model
 import numpy as np
 from tensorflow.keras.preprocessing import image
 
-
 def image_classification(img_path):
     img_path = img_path[1:]
     images_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
@@ -24,8 +23,6 @@ def image_classification(img_path):
     predicted_class = np.argmax(predictions, axis=-1)
 
     return images_classes[predicted_class[0]]
-
-
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'
