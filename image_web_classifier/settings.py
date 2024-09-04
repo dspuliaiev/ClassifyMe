@@ -21,7 +21,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['classifyme.koyeb.app', 'localhost', '127.0.0.1']
 
 
-CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1']
 
 # Application definition
 
@@ -129,23 +129,23 @@ MEDIA_URL = 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'root': {
-        'handlers': ['console'],
-        'level': 'DEBUG',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'root': {
+#         'handlers': ['console'],
+#         'level': 'DEBUG',
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }

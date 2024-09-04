@@ -5,34 +5,27 @@ from django.core.files.base import ContentFile
 import os
 import numpy as np
 from PIL import Image
-from tensorflow.keras.models import load_model
-from functools import partial
+from tensorflow import keras
 
-# Define the function to load the model
-def load_tf_model():
-    model_path = 'model/cifar-10.keras'
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"Model file not found: {model_path}")
-    return load_model(model_path)
+# Загрузите модель один раз при старте приложения
+MODEL_PATH = 'model/cifar-10.keras'
+if not os.path.exists(MODEL_PATH):
+    raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
+model = keras.models.load_model(MODEL_PATH)
 
-# Use partial for lazy loading the model
-load_model_lazy = partial(load_tf_model)
-
-# Define the image classification function
-def image_classification(img_path):
-    img_path = img_path[1:]
+# Определите функцию классификации изображений
+def image_classification(image_path):
     images_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
-    # Load the model lazily
-    model = load_model_lazy()
-
     try:
-        img = Image.open(img_path)
-        img = img.resize((32, 32))
+        # Откройте изображение и преобразуйте его в массив NumPy
+        img = Image.open(image_path)
+        img = img.resize((32, 32))  # Убедитесь, что размер соответствует ожиданиям модели
         img_array = np.array(img)
-        img_array = np.expand_dims(img_array, axis=0)
-        img_array = img_array / 255.0
+        img_array = np.expand_dims(img_array, axis=0)  # Добавьте размерность для партии
+        img_array = img_array / 255.0  # Нормализуйте изображение
 
+        # Получите предсказания от модели
         predictions = model.predict(img_array)
         predicted_class = np.argmax(predictions, axis=-1)
 
@@ -40,7 +33,7 @@ def image_classification(img_path):
     except Exception as e:
         return str(e)
 
-# Define the IndexView class
+# Определите класс IndexView
 class IndexView(TemplateView):
     template_name = 'main/index.html'
 
@@ -49,11 +42,13 @@ class IndexView(TemplateView):
             try:
                 uploaded_file = request.FILES['image']
                 file_name = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
-                file_url = default_storage.url(file_name)
+                file_path = default_storage.path(file_name)  # Получите путь к файлу на сервере
 
-                result = image_classification(file_url)
+                # Передайте путь к файлу функции классификации
+                result = image_classification(file_path)
 
-                return JsonResponse({'result': result, 'image_url': file_url})
+                return JsonResponse({'result': result, 'image_url': default_storage.url(file_name)})
             except Exception as e:
                 return JsonResponse({'error': str(e)}, status=500)
         return JsonResponse({'result': None, 'image_url': None})
+
