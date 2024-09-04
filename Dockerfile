@@ -50,6 +50,7 @@ RUN apt-get update && apt-get install -y \
     liblcms2-dev \
     libwebp-dev \
     libharfbuzz-dev \
+    libssl-dev \
     libfribidi-dev && \
     rm -rf /var/lib/apt/lists/*
 
