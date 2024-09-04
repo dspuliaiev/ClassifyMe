@@ -24,6 +24,12 @@ WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
 COPY --from=builder /usr/local/bin /usr/local/bin
 
+# Установка Pillow явно
+RUN pip install Pillow
+
+# Проверка установки Pillow
+RUN python -c "from PIL import Image; print('Pillow is installed')"
+
 COPY . .
 
 RUN python manage.py collectstatic --noinput
