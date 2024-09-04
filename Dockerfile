@@ -1,12 +1,13 @@
 # Stage 1: Build
 FROM python:3.12-bullseye AS builder
 
-# Установка необходимых системных зависимостей
+# Установка необходимых системных зависимостей, включая libssl1.1
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
     pkg-config \
     libhdf5-dev \
+    libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -19,6 +20,11 @@ RUN poetry install --no-interaction --no-ansi --no-dev
 FROM python:3.12-slim
 
 WORKDIR /app
+
+# Устанавливаем libssl1.1 в финальный образ
+RUN apt-get update && apt-get install -y \
+    libssl1.1 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Копируем зависимости из этапа сборки
 COPY --from=builder /usr/local /usr/local
