@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM python:3.12-buster AS builder
+FROM python:3.13-rc-slim-bookworm AS builder
 
 # Встановлюємо змінні оточення
 ENV PYTHONDONTWRITEBYTECODE=1
