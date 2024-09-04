@@ -2,12 +2,12 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
-from django.utils.functional import lazy
 import os
 
 from tensorflow.keras.models import load_model
 import numpy as np
 from tensorflow.keras.preprocessing import image
+from functools import partial
 
 
 # Определите функцию для загрузки модели
@@ -15,8 +15,8 @@ def load_tf_model():
     return load_model('model/cifar-10.keras')
 
 
-# Используйте lazy для ленивой загрузки модели
-load_model_lazy = lazy(load_tf_model, load_model)
+# Используйте partial для ленивой загрузки модели
+load_model_lazy = partial(load_tf_model)
 
 
 def image_classification(img_path):
