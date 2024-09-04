@@ -50,7 +50,7 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libharfbuzz-dev \
     libfribidi-dev \
-    libssl1.1 && \
+    libssl3 && \  # Change this line to install libssl3
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
