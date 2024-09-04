@@ -31,4 +31,4 @@ COPY . /app/
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--worker-class", "gevent", "root.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
+CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
