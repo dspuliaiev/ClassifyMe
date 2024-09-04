@@ -1,5 +1,4 @@
 # Stage 1: Build
-# Stage 1: Build
 FROM python:3.12-bullseye AS builder
 
 # Встановлюємо змінні оточення
@@ -8,6 +7,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
+    openssl \
     build-essential \
     libpq-dev \
     cmake \
@@ -39,7 +39,7 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install runtime dependencies including libssl1.1 from an alternative source
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     cmake \
@@ -50,11 +50,7 @@ RUN apt-get update && apt-get install -y \
     liblcms2-dev \
     libwebp-dev \
     libharfbuzz-dev \
-    libfribidi-dev \
-    wget && \
-    wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1n-0+deb10u4_amd64.deb && \
-    dpkg -i libssl1.1_1.1.1n-0+deb10u4_amd64.deb && \
-    rm libssl1.1_1.1.1n-0+deb10u4_amd64.deb && \
+    libfribidi-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
