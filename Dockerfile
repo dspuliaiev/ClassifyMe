@@ -18,8 +18,8 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libharfbuzz-dev \
     libfribidi-dev \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+    libssl-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -50,8 +50,8 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libharfbuzz-dev \
     libfribidi-dev \
-    libssl1.1 \
-    && rm -rf /var/lib/apt/lists/*
+    libssl1.1 && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
