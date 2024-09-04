@@ -32,7 +32,9 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update \
     && apt-get install -y \
-    libpq-dev && \
+    libpq-dev \
+    cmake \
+    zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
