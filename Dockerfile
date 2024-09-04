@@ -28,4 +28,4 @@ COPY . .
 
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--timeout", "300", "image_web_classifier.wsgi:application"]

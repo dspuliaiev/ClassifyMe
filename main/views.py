@@ -2,16 +2,29 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.utils.functional import lazy
 import os
 
 from tensorflow.keras.models import load_model
 import numpy as np
 from tensorflow.keras.preprocessing import image
 
+
+# Определите функцию для загрузки модели
+def load_tf_model():
+    return load_model('model/cifar-10.keras')
+
+
+# Используйте lazy для ленивой загрузки модели
+load_model_lazy = lazy(load_tf_model, load_model)
+
+
 def image_classification(img_path):
     img_path = img_path[1:]
     images_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
-    model = load_model('model/cifar-10.keras')
+
+    # Загрузите модель лениво
+    model = load_model_lazy()
 
     img = image.load_img(img_path, target_size=(32, 32))
     img_array = image.img_to_array(img)
@@ -23,6 +36,7 @@ def image_classification(img_path):
     predicted_class = np.argmax(predictions, axis=-1)
 
     return images_classes[predicted_class[0]]
+
 
 class IndexView(TemplateView):
     template_name = 'main/index.html'
