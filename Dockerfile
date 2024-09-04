@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     pkg-config \
     libhdf5-dev \
-    zlib1g-dev \  # Додаємо zlib1g-dev
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
