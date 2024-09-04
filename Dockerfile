@@ -1,4 +1,3 @@
-# Stage 1: Build
 FROM python:3.12-slim AS builder
 
 # Встановлюємо змінні оточення
@@ -11,6 +10,7 @@ RUN apt-get update \
     build-essential \
     libpq-dev \
     cmake \
+    zlib1g-dev \  # Додаємо zlib1g-dev
     && rm -rf /var/lib/apt/lists/*
 
 # Встановлюємо робочий каталог
