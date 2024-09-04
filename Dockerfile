@@ -14,7 +14,9 @@ WORKDIR /app
 COPY pyproject.toml poetry.lock ./
 RUN pip install poetry
 RUN poetry config virtualenvs.create false
-RUN poetry install --no-interaction --no-ansi --no-dev
+
+# Устанавливаем зависимости и логируем вывод
+RUN poetry install --no-interaction --no-ansi --no-dev > poetry_install.log 2>&1
 
 # Stage 2: Final
 FROM python:3.12-slim-bullseye
@@ -27,11 +29,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Копируем зависимости из этапа сборки
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /usr/local /usr/local
 
 # Копируем исходный код приложения
 COPY . /app/
+
+# Устанавливаем Pillow
+RUN pip install Pillow
 
 # Собираем статические файлы
 RUN python manage.py collectstatic --noinput
