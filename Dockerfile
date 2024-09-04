@@ -7,8 +7,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     cmake \
     zlib1g-dev \
-    libjpeg-dev \  # Add this line
-    && rm -rf /var/lib/apt/lists/*
+    libjpeg-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
