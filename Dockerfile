@@ -12,8 +12,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     zlib1g-dev \
     libssl-dev \
-    libssl1.1 && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -32,13 +31,17 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update \
+# Add the Bullseye repository and install libssl1.1
+RUN apt-get update && apt-get install -y \
+    gnupg \
+    && echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
+    && apt-get update \
     && apt-get install -y \
     libpq-dev \
     cmake \
     zlib1g-dev \
-    libssl1.1 && \
-    rm -rf /var/lib/apt/lists/*
+    libssl1.1 \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
