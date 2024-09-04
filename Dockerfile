@@ -21,17 +21,12 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Копируем зависимости из этапа сборки
-COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /usr/local /usr/local
 
-# Установка Pillow явно
-RUN pip install Pillow
-
-# Проверка установки Pillow
-RUN python -c "from PIL import Image; print('Pillow is installed')"
-
-COPY . .
+COPY . /app/
 
 RUN python manage.py collectstatic --noinput
+
+EXPOSE 8000
 
 CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
