@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     cmake \
-    zlib1g-dev && \
+    zlib1g-dev \
+    libssl-dev \
+    libssl1.1 && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -34,7 +36,8 @@ RUN apt-get update \
     && apt-get install -y \
     libpq-dev \
     cmake \
-    zlib1g-dev && \
+    zlib1g-dev \
+    libssl1.1 && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
