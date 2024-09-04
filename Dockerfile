@@ -11,6 +11,13 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     cmake \
     zlib1g-dev \
+    libjpeg-dev \
+    libtiff-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
@@ -22,7 +29,7 @@ RUN pip install --upgrade pip \
     && pip install poetry
 
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev
+    && poetry install --no-dev --no-interaction --no-ansi
 
 # Stage 2: Final
 FROM python:3.12-slim
@@ -31,22 +38,24 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Add the Bullseye repository and install libssl1.1
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y \
-    gnupg \
-    && echo "deb http://security.debian.org/debian-security bullseye-security main" >> /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y \
     libpq-dev \
     cmake \
     zlib1g-dev \
+    libjpeg62-turbo-dev \
+    libtiff5-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libwebp-dev \
+    libharfbuzz-dev \
+    libfribidi-dev \
     libssl1.1 \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 COPY --from=builder /usr/local /usr/local
-
 COPY . /app/
 
 RUN python manage.py collectstatic --noinput
