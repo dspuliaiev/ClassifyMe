@@ -18,10 +18,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['inquisitive-esta-pyweb-b74f405d.koyeb.app',
+                 'classifymy.koyeb.app', '127.0.0.1']
 
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['inquisitive-esta-pyweb-b74f405d.koyeb.app',
+                 'classifymy.koyeb.app', '127.0.0.1']
 
 # Application definition
 
