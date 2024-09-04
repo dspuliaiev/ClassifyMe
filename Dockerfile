@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM python:3.12-bullseye AS builder
+FROM python:3.12-buster AS builder
 
 # Встановлюємо змінні оточення
 ENV PYTHONDONTWRITEBYTECODE=1
