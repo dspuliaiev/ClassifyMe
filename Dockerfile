@@ -42,17 +42,15 @@ ENV PYTHONUNBUFFERED=1
 
 # Встановлюємо необхідні пакети
 RUN apt-get update && apt-get install -y \
-    build-essential \
     libpq-dev \
-    cmake \
-    zlib1g-dev \
-    libjpeg-dev \
-    libtiff-dev \
-    libfreetype6-dev \
-    liblcms2-dev \
-    libwebp-dev \
-    libharfbuzz-dev \
-    libfribidi-dev && \
+    zlib1g \
+    libjpeg62-turbo-dev \
+    libtiff5 \
+    libfreetype6 \
+    liblcms2-2 \
+    libwebp6 \
+    libharfbuzz0b \
+    libfribidi0 && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -67,4 +65,5 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Command to start the application
-CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300"]
+CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300", "--workers", "5"]
+
