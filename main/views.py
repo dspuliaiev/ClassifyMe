@@ -18,7 +18,9 @@ config = tf.compat.v1.ConfigProto()
 config.intra_op_parallelism_threads = 1
 config.inter_op_parallelism_threads = 1
 config.allow_soft_placement = True
-config.device_count = {'CPU': 1}
+
+# Устанавливаем количество устройств (CPU)
+config.device_count['CPU'] = 1
 
 session = tf.compat.v1.Session(config=config)
 K.set_session(session)
