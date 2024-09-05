@@ -65,5 +65,5 @@ RUN python manage.py collectstatic --noinput
 EXPOSE 8000
 
 # Command to start the application
-CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300", "--workers", "5"]
+CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "300", "--workers", "1"]
 
