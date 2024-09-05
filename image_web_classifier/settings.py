@@ -18,10 +18,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['classifyme.koyeb.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['classifyme.koyeb.app', 'localhost', '127.0.0.1', "classify-q2gm.onrender.com"]
 
 
-CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1', "https://classify-q2gm.onrender.com"]
 
 # Application definition
 
