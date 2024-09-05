@@ -45,10 +45,10 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     zlib1g \
     libjpeg62-turbo-dev \
-    libtiff5 \
+    libtiff6 \
     libfreetype6 \
     liblcms2-2 \
-    libwebp6 \
+    libwebp7 \
     libharfbuzz0b \
     libfribidi0 && \
     rm -rf /var/lib/apt/lists/*
