@@ -9,6 +9,7 @@ ENV PYTHONUNBUFFERED=1
 RUN apk update && apk add --no-cache \
     build-base libpq cmake zlib-dev jpeg-dev tiff-dev freetype-dev \
     lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev \
+    hdf5-dev \
     && rm -rf /var/cache/apk/*
 
 # Устанавливаем рабочий каталог
@@ -40,6 +41,7 @@ ENV TF_ENABLE_ONEDNN_OPTS=1
 # Устанавливаем необходимые пакеты для запуска
 RUN apk update && apk add --no-cache \
     libpq zlib libjpeg-turbo tiff freetype lcms2 libwebp harfbuzz fribidi \
+    hdf5 \
     && rm -rf /var/cache/apk/*
 
 # Устанавливаем рабочий каталог
