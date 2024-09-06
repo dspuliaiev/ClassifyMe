@@ -1,13 +1,14 @@
 # Stage 1: Build
-FROM python:3.11-alpine AS builder
+FROM python:3.11-slim AS builder
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
 # Устанавливаем необходимые пакеты для сборки
-RUN apk add --no-cache \
-    build-base postgresql-dev cmake zlib-dev jpeg-dev tiff-dev \
-    freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential libpq-dev cmake zlib1g-dev libjpeg-dev libtiff-dev \
+    libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -35,18 +36,16 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 # Устанавливаем необходимые пакеты для запуска
 RUN apk add --no-cache \
-    libpq zlib libjpeg tiff freetype lcms2 libwebp harfbuzz fribidi
+    libpq zlib libjpeg-turbo tiff freetype lcms2 libwebp harfbuzz fribidi
 
 WORKDIR /app
 
-# Копируем только необходимые файлы из стадии сборки
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-COPY --from=builder /usr/local/bin /usr/local/bin
-COPY --from=builder /app /app
+# Копируем установленные зависимости из стадии сборки
+COPY --from=builder /usr/local /usr/local
 
-# Устанавливаем TensorFlow с поддержкой AVX2 и FMA
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --no-cache-dir tensorflow --extra-index-url https://google-cloud-tensorflow-wheels.storage.googleapis.com/cpu-avx2-wheels/
+# Копируем весь код проекта в рабочий каталог
+COPY . /app/
+
 
 EXPOSE 8000
 
