@@ -22,7 +22,10 @@ COPY pyproject.toml poetry.lock /app/
 RUN pip install --upgrade pip && pip install poetry
 
 # Настраиваем Poetry и устанавливаем зависимости проекта
-RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
+RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi --without ml-dtypes
+
+# Устанавливаем ml-dtypes и numpy вручную для избежания конфликта
+RUN pip install numpy==1.21 ml-dtypes
 
 # Копируем весь код проекта в рабочий каталог
 COPY . /app/
@@ -61,6 +64,7 @@ EXPOSE 8000
 
 # Команда для запуска приложения
 CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150"]
+
 
 
 
