@@ -30,7 +30,7 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Stage 2: Final
-FROM python:3.11-alpine
+FROM python:3.11-slim
 
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -38,9 +38,10 @@ ENV PYTHONUNBUFFERED=1
 ENV TF_ENABLE_ONEDNN_OPTS=1
 
 # Устанавливаем необходимые пакеты для запуска
-RUN apk update && apk add --no-cache \
-    libpq zlib libjpeg-turbo tiff freetype lcms2 libwebp harfbuzz fribidi \
-    && rm -rf /var/cache/apk/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev zlib1g libjpeg62-turbo-dev libtiff6 libfreetype6 \
+    liblcms2-2 libwebp7 libharfbuzz0b libfribidi0 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем рабочий каталог
 WORKDIR /app
@@ -59,6 +60,7 @@ RUN pip install --upgrade pip \
 EXPOSE 8000
 
 # Команда для запуска приложения
-CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150"]
+CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150", "--workers", "1"]
+
 
 
