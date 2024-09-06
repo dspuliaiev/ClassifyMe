@@ -39,7 +39,7 @@ ENV TF_ENABLE_ONEDNN_OPTS=1
 
 # Устанавливаем необходимые пакеты для запуска
 RUN apk update && apk add --no-cache \
-    libpq zlib jpeg-turbo tiff freetype lcms2 libwebp harfbuzz fribidi \
+    libpq zlib libjpeg-turbo tiff freetype lcms2 libwebp harfbuzz fribidi \
     && rm -rf /var/cache/apk/*
 
 # Устанавливаем рабочий каталог
@@ -58,7 +58,7 @@ RUN pip install --no-cache-dir tensorflow-cpu==2.17.0 tensorflow-io-gcs-filesyst
 EXPOSE 8000
 
 # Команда для запуска приложения
-CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150", "--workers", "1"]
+CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150"]
 
 
 
