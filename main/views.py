@@ -7,23 +7,10 @@ import numpy as np
 from PIL import Image
 from tensorflow import keras
 import tensorflow as tf
-from tensorflow.keras import backend as K
 import logging
 
 # Настройка логирования
 logger = logging.getLogger(__name__)
-
-# Оптимизация использования CPU для TensorFlow
-config = tf.compat.v1.ConfigProto()
-config.intra_op_parallelism_threads = 1
-config.inter_op_parallelism_threads = 1
-config.allow_soft_placement = True
-
-# Устанавливаем количество устройств (CPU)
-config.device_count['CPU'] = 1
-
-session = tf.compat.v1.Session(config=config)
-K.set_session(session)
 
 # Загрузите модель один раз при старте приложения
 MODEL_PATH = 'model/cifar-10.keras'
