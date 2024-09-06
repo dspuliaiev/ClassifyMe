@@ -25,10 +25,9 @@ images_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog'
 def image_classification(image_path):
     try:
         # Открываем изображение и преобразуем в массив NumPy
-        img = Image.open(image_path)
-        img = img.resize((32, 32))  # Изменяем размер до 32x32
-        img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Добавляем измерение для батча и нормализуем
-        img.close()  # Закрываем изображение после его использования
+        with Image.open(image_path) as img:
+            img = img.resize((32, 32))  # Изменяем размер до 32x32
+            img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Добавляем измерение для батча и нормализуем
 
         # Предсказание класса изображения
         predictions = model.predict(img_array)
