@@ -9,13 +9,14 @@ readme = "README.md"
 python = ">=3.11,<3.12"
 django = "^5.1"
 Pillow = "^9.4.0"
-tensorflow-cpu="2.17.0"
 tensorflow-io-gcs-filesystem = "0.31.0"
 python-dotenv = "^1.0.1"
 gunicorn = "^23.0.0"
 whitenoise = "^6.7.0"
 gevent = "^24.2.1"
 cloud-tpu-client = "^0.10"
+tensorflow = "^2.17.0"
+lite = "^0.1.5"
 
 [build-system]
 requires = ["poetry-core"]
