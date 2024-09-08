@@ -9,7 +9,8 @@ ENV TF_ENABLE_ONEDNN_OPTS=1
 # Устанавливаем необходимые пакеты для сборки и работы
 RUN apk update && apk add --no-cache \
     gcc g++ make cmake libpq-dev zlib-dev jpeg-dev tiff-dev \
-    freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev bash
+    freetype-dev lcms2-dev libwebp-dev harfbuzz-dev fribidi-dev bash \
+    hdf5-dev
 
 # Устанавливаем рабочий каталог
 WORKDIR /app
