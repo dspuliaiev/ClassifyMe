@@ -55,12 +55,12 @@ class IndexView(TemplateView):
                 result = image_classification(file_path)
 
                 # Возвращаем результат
-                return JsonResponse({'result': result, 'image_url': default_storage.url(file_name)})
+                return JsonResponse({'result': result})
             except Exception as e:
                 # Логируем и возвращаем ошибку в формате JSON
                 logger.error(f"Ошибка загрузки или обработки файла: {e}")
                 return JsonResponse({'error': str(e)}, status=500)
         # Если изображение не загружено
-        return JsonResponse({'result': None, 'image_url': None})
+        return JsonResponse({'result': None})
 
 
