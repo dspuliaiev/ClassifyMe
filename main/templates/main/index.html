@@ -292,7 +292,6 @@
 <!-- Portfolio Section -->
 <section id="portfolio" class="portfolio cta">
   <div class="container-fluid" data-aos="zoom-in">
-
     <div class="section-title text-center">
       <h3>Image Classification</h3>
       <p>Upload an image and get it classified</p>
@@ -324,23 +323,32 @@
 <script>
   document.getElementById('image').addEventListener('change', function(event) {
     const file = event.target.files[0];
-    if (file) {
+    
+    // Проверка типа файла (только PNG и JPEG)
+    if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = document.createElement('img');
         img.src = e.target.result;
-        img.style.width = '20%'; // Устанавливаем ширину изображения 20% от исходного размера
+        img.style.width = '20%'; // Устанавливаем ширину изображения 20% от контейнера
         document.getElementById('image-preview').innerHTML = '';
         document.getElementById('image-preview').appendChild(img);
-        document.getElementById('classify-btn').disabled = false;     
+        document.getElementById('classify-btn').disabled = false;
       };
       reader.readAsDataURL(file);
+    } else {
+      alert('Please upload a valid image file (PNG or JPEG)');
+      document.getElementById('classify-btn').disabled = true;
     }
   });
 
   document.getElementById('classify-btn').addEventListener('click', function() {
     const form = document.getElementById('image-form');
     const formData = new FormData(form);
+
+    // Показать сообщение об ожидании
+    document.getElementById('classification-result').innerText = 'Classifying image, please wait...';
+    document.getElementById('result-box').style.display = 'block';
 
     fetch(form.action, {
       method: 'POST',
@@ -351,10 +359,16 @@
     })
     .then(response => response.json())
     .then(data => {
-      document.getElementById('classification-result').innerText = data.result;
-      document.getElementById('result-box').style.display = 'block';
+      if (data.result) {
+        document.getElementById('classification-result').innerText = data.result;
+      } else if (data.error) {
+        document.getElementById('classification-result').innerText = `Error: ${data.error}`;
+      }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+      document.getElementById('classification-result').innerText = `Error occurred: ${error}`;
+      console.error('Error:', error);
+    });
   });
 
   // Функция для получения значения cookie
@@ -362,9 +376,9 @@
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
       const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
+      for (let i = 0; cookies.length > i; i++) {
         const cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
+        // Проверяем, начинается ли строка куки с имени, которое мы ищем
         if (cookie.substring(0, name.length + 1) === (name + '=')) {
           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
           break;
@@ -375,6 +389,7 @@
   }
 </script>
 <!-- End Portfolio Section -->
+
 
 
     <!-- ======= Team Section ======= -->

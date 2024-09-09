@@ -1,13 +1,15 @@
+import os
 from django.http import JsonResponse
 from django.views.generic import TemplateView
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-import os
+import cloudinary.uploader
+import cloudinary
+import cloudinary.api
 import numpy as np
 from PIL import Image
 from tensorflow import keras
-import tensorflow as tf
 import logging
+import requests
+from io import BytesIO
 
 # Настройка логирования
 logger = logging.getLogger(__name__)
@@ -22,12 +24,13 @@ model = keras.models.load_model(MODEL_PATH)
 images_classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 
 # Определите функцию классификации изображений
-def image_classification(image_path):
+def image_classification(image_url):
     try:
-        # Открываем изображение и преобразуем в массив NumPy
-        with Image.open(image_path) as img:
-            img = img.resize((32, 32))  # Изменяем размер до 32x32
-            img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Добавляем измерение для батча и нормализуем
+        # Загрузка изображения из Cloudinary по URL
+        response = requests.get(image_url)
+        img = Image.open(BytesIO(response.content))
+        img = img.resize((32, 32))  # Изменяем размер до 32x32
+        img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Добавляем измерение для батча и нормализуем
 
         # Предсказание класса изображения
         predictions = model.predict(img_array)
@@ -47,12 +50,13 @@ class IndexView(TemplateView):
             try:
                 # Получаем загруженный файл
                 uploaded_file = request.FILES['image']
-                # Сохраняем файл и получаем путь
-                file_name = default_storage.save(uploaded_file.name, ContentFile(uploaded_file.read()))
-                file_path = default_storage.path(file_name)
+
+                # Загружаем файл в Cloudinary
+                upload_result = cloudinary.uploader.upload(uploaded_file)
+                image_url = upload_result['url']  # Получаем URL загруженного изображения
 
                 # Классификация изображения
-                result = image_classification(file_path)
+                result = image_classification(image_url)
 
                 # Возвращаем результат
                 return JsonResponse({'result': result})
@@ -62,5 +66,6 @@ class IndexView(TemplateView):
                 return JsonResponse({'error': str(e)}, status=500)
         # Если изображение не загружено
         return JsonResponse({'result': None})
+
 
 

@@ -255,6 +255,24 @@ google-api-python-client = "1.8.0"
 oauth2client = "*"
 
 [[package]]
+name = "cloudinary"
+version = "1.41.0"
+description = "Python and Django SDK for Cloudinary"
+optional = false
+python-versions = "*"
+files = [
+    {file = "cloudinary-1.41.0.tar.gz", hash = "sha256:e189739a796a7d2ad15c19971741d33a9300816b16c0282b4b14ccf1dd2948c0"},
+]
+
+[package.dependencies]
+certifi = "*"
+six = "*"
+urllib3 = ">=1.26.5"
+
+[package.extras]
+dev = ["tox"]
+
+[[package]]
 name = "django"
 version = "5.1.1"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -273,6 +291,24 @@ tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
+
+[[package]]
+name = "django-cloudinary-storage"
+version = "0.3.0"
+description = "Django package that provides Cloudinary storages for both media and static files as well as management commands for removing unnecessary files."
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-cloudinary-storage-0.3.0.tar.gz", hash = "sha256:debd403a5f225c9d35c4af508ff4abc7fdc262129464134b60b2feeb2c44d3e1"},
+    {file = "django_cloudinary_storage-0.3.0-py3-none-any.whl", hash = "sha256:95c855c7334141b2a485ea7eb5716de87bb6ce0d848e205debb3a3ab7bbbd49a"},
+]
+
+[package.dependencies]
+cloudinary = ">=1.4.0"
+requests = ">=2.10.0"
+
+[package.extras]
+video = ["python-magic (>=0.4.12)"]
 
 [[package]]
 name = "flatbuffers"
@@ -1729,4 +1765,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "01d4640237190e410ca09c02bac2663cdb017907eed3979a75d4a3ae3fdf27c9"
+content-hash = "12a45822e31fc09be85a9957c8e21363e72c75d5601357eb44af9b5c616c489a"
