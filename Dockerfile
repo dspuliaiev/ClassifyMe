@@ -35,7 +35,7 @@ FROM python:3.11-slim
 # Устанавливаем переменные окружения
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV TF_ENABLE_ONEDNN_OPTS=1  # Оптимизация для TensorFlow на CPU
+ENV TF_ENABLE_ONEDNN_OPTS=1
 
 # Устанавливаем необходимые пакеты для запуска
 RUN apt-get update && apt-get install -y --no-install-recommends \
