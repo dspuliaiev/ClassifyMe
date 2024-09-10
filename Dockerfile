@@ -1,66 +1,66 @@
 # Stage 1: Build
 FROM python:3.11-slim AS builder
 
-# Устанавливаем переменные окружения
+# Install required system dependencies
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Устанавливаем необходимые пакеты для сборки
+# Install dependencies for building
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential libpq-dev cmake zlib1g-dev libjpeg-dev libtiff-dev \
     libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочий каталог
+# Install work directory
 WORKDIR /app
 
-# Копируем конфигурацию Poetry
+# Copy the poetry config file
 COPY pyproject.toml poetry.lock /app/
 
-# Устанавливаем и обновляем pip, устанавливаем Poetry
+# Install and upgrade pip, install poetry
 RUN pip install --upgrade pip --no-cache-dir && pip install poetry
 
-# Настраиваем Poetry и устанавливаем зависимости проекта
+# Customize poetry configuration
 RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
 
-# Копируем весь код проекта в рабочий каталог
+# Copy the rest of the code
 COPY . /app/
 
-# Собираем статические файлы
+# Collect static files
 RUN python manage.py collectstatic --noinput
 
 # Stage 2: Final
 FROM python:3.11-slim
 
-# Устанавливаем переменные окружения
+# Install required system dependencies
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV TF_ENABLE_ONEDNN_OPTS=1
 
-# Устанавливаем необходимые пакеты для запуска
+# Install dependencies for running
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev zlib1g libjpeg62-turbo-dev libtiff6 libfreetype6 \
     liblcms2-2 libwebp7 libharfbuzz0b libfribidi0 \
     && rm -rf /var/lib/apt/lists/*
 
-# Устанавливаем рабочий каталог
+# Install work directory
 WORKDIR /app
 
-# Копируем установленные зависимости из стадии сборки
+# Copy the installed dependencies from the build stage
 COPY --from=builder /usr/local /usr/local
 
-# Копируем весь код проекта в рабочий каталог
+# Copy the rest of the code
 COPY . /app/
 
-# Устанавливаем TensorFlow с поддержкой AVX2 и FMA
+# Install TensorFlow with AVX2 and FMA support
 RUN pip install --upgrade pip \
     && pip install tensorflow --no-cache-dir --extra-index-url https://google-cloud-tensorflow-wheels.storage.googleapis.com/cpu-avx2-wheels/
 
-# Открываем порт 8000 для приложения
+# Open port 8000 for the application
 EXPOSE 8000
 
-# Команда для запуска приложения
-CMD ["gunicorn", "--worker-class", "gevent", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "150", "--workers", "1"]
+# The command to run the application with optimized parameters Gunicorn
+CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "150", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 
 

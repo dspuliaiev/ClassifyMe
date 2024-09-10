@@ -19,6 +19,8 @@ tensorflow-io-gcs-filesystem = "0.31.0"
 cloud-tpu-client = "^0.10"
 cloudinary = "^1.41.0"
 django-cloudinary-storage = "^0.3.0"
+aiohttp = "^3.10.5"
+asyncio = "^3.4.3"
 
 
 
