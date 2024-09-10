@@ -52,15 +52,11 @@ COPY --from=builder /usr/local /usr/local
 # Copy the rest of the code
 COPY . /app/
 
-# Install TensorFlow with AVX2 and FMA support
-RUN pip install --upgrade pip \
-    && pip install tensorflow --no-cache-dir --extra-index-url https://google-cloud-tensorflow-wheels.storage.googleapis.com/cpu-avx2-wheels/
-
 # Open port 8000 for the application
 EXPOSE 8000
 
 # The command to run the application with optimized parameters Gunicorn
-CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "150", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 
 
