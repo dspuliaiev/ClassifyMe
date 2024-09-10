@@ -294,7 +294,7 @@
   <div class="container-fluid" data-aos="zoom-in">
     <div class="section-title text-center">
       <h3>Image Classification</h3>
-      <p>Upload an image and get it classified</p>
+      <p>Upload an image from CIFAR-10 categories (airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck) and get it classified</p>
     </div>
     <div class="row justify-content-center">
       <div class="col-lg-6">
@@ -324,13 +324,13 @@
   document.getElementById('image').addEventListener('change', function(event) {
     const file = event.target.files[0];
     
-    // Проверка типа файла (только PNG и JPEG)
+    // Checking the file type (PNG and JPEG only)
     if (file && (file.type === 'image/png' || file.type === 'image/jpeg')) {
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = document.createElement('img');
         img.src = e.target.result;
-        img.style.width = '20%'; // Устанавливаем ширину изображения 20% от контейнера
+        img.style.width = '15%'; // Set the width of the image to 15% of the container
         document.getElementById('image-preview').innerHTML = '';
         document.getElementById('image-preview').appendChild(img);
         document.getElementById('classify-btn').disabled = false;
@@ -346,7 +346,7 @@
     const form = document.getElementById('image-form');
     const formData = new FormData(form);
 
-    // Показать сообщение об ожидании
+    // Show pending message
     document.getElementById('classification-result').innerText = 'Classifying image, please wait...';
     document.getElementById('result-box').style.display = 'block';
 
@@ -354,7 +354,7 @@
       method: 'POST',
       body: formData,
       headers: {
-        'X-CSRFToken': getCookie('csrftoken') // Используем функцию getCookie для получения CSRF токена
+        'X-CSRFToken': getCookie('csrftoken') // Use getCookie function to get CSRF token
       }
     })
     .then(response => response.json())
@@ -371,14 +371,14 @@
     });
   });
 
-  // Функция для получения значения cookie
+  // Function to get cookie value
   function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
       const cookies = document.cookie.split(';');
       for (let i = 0; cookies.length > i; i++) {
         const cookie = cookies[i].trim();
-        // Проверяем, начинается ли строка куки с имени, которое мы ищем
+        // Check if the cookie string starts with the name we are looking for
         if (cookie.substring(0, name.length + 1) === (name + '=')) {
           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
           break;
@@ -389,7 +389,6 @@
   }
 </script>
 <!-- End Portfolio Section -->
-
 
 
     <!-- ======= Team Section ======= -->
@@ -430,7 +429,7 @@
               <div class="member-info">
                 <h4>Oleksandr Symashkin</h4>
                 <span>Scrum master</span>
-                <p>Team communication and created project documentation</p>
+                <p>Facilitated team communication and created project documentation</p>
                 <div class="social">
 {#                  <a href=""><i class="ri-twitter-fill"></i></a>#}
 {#                  <a href=""><i class="ri-facebook-fill"></i></a>#}
