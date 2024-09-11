@@ -11,9 +11,14 @@ import logging
 import aiohttp
 from io import BytesIO
 import asyncio
+import gc
 
 # Set up logging
 logger = logging.getLogger(__name__)
+
+# Enable mixed precision
+from tensorflow.keras import mixed_precision
+mixed_precision.set_global_policy('mixed_float16')
 
 # Load the model once when the application starts
 MODEL_PATH = 'model/cifar-10.keras'
@@ -43,6 +48,8 @@ async def image_classification(image_url):
     except Exception as e:
         logger.error(f"Error during image classification: {e}")
         return str(e)
+    finally:
+        gc.collect()  # Collect garbage to free up memory
 
 # Define the asynchronous IndexView class
 class IndexView(TemplateView):
