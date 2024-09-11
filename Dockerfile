@@ -32,7 +32,7 @@ FROM python:3.11-slim
 # Install required system dependencies
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV TF_ENABLE_ONEDNN_OPTS=1
+ENV TF_ENABLE_ONEDNN_OPTS=0
 
 # Install dependencies for running
 RUN apt-get update && apt-get install -y --no-install-recommends \
