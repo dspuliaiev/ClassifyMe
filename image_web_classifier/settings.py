@@ -24,7 +24,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['.koyeb.app', 'localhost', '127.0.0.1', ".onrender.com", ".vercel.app", "cloudinary.com"]
 
 
-CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1', "https://classify-q2gm.onrender.com", "https://.cloudinary.com"]
+CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1', "https://.onrender.com", "https://.cloudinary.com"]
 
 # Application definition
 

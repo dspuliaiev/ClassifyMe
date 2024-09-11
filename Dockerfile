@@ -14,14 +14,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install work directory
 WORKDIR /app
 
-# Copy the poetry config file
-COPY pyproject.toml poetry.lock /app/
+# Copy requirements file
+COPY requirements.txt /app/
 
-# Install and upgrade pip, install poetry
-RUN pip install --upgrade pip --no-cache-dir && pip install poetry
-
-# Customize poetry configuration
-RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
+# Install and upgrade pip, install dependencies
+RUN pip install --upgrade pip --no-cache-dir && pip install -r requirements.txt
 
 # Copy the rest of the code
 COPY . /app/
@@ -57,6 +54,7 @@ EXPOSE 8000
 
 # The command to run the application with optimized parameters Gunicorn
 CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
+
 
 
 
