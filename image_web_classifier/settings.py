@@ -21,10 +21,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['.koyeb.app', 'localhost', '127.0.0.1', ".onrender.com", ".vercel.app", "cloudinary.com"]
+ALLOWED_HOSTS = ['.koyeb.app', 'localhost', '127.0.0.1', ".onrender.com", ".vercel.app", "cloudinary.com", "railway.app"]
 
 
-CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1', "https://.onrender.com", "https://.cloudinary.com"]
+CSRF_TRUSTED_ORIGINS = ['https://classifyme.koyeb.app', 'https://localhost', 'https://127.0.0.1', "https://.onrender.com", "https://.cloudinary.com",  "https://.railway.app"]
 
 # Application definition
 
