@@ -49,11 +49,9 @@ COPY --from=builder /usr/local /usr/local
 # Copy the rest of the code
 COPY . /app/
 
-# Open port 8000 for the application
-EXPOSE 8000
 
 # The command to run the application with optimized parameters Gunicorn
-CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:$PORT"]
 
 
 
