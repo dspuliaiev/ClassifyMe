@@ -51,7 +51,7 @@ COPY . /app/
 
 
 # The command to run the application with optimized parameters Gunicorn
-CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "--worker-class", "gevent", "--workers", "1", "--timeout", "300", "image_web_classifier.wsgi:application", "--bind", "0.0.0.0:8000"]
 
 
 
